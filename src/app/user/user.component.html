@@ -1,0 +1,91 @@
+<div class="pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Add User</h1>
+  
+</div>
+
+
+
+  <form [formGroup]="userForm" (ngSubmit)="submituserData()" novalidate>
+  
+    <div class="row" >
+      <div class="col">
+        <input type="text" placeholder="FirstName" formControlName="firstName" class="form-control" required>
+          
+        <p *ngIf="firstName.touched && firstName.invalid" class="error"><sup>*</sup>Please enter First Name</p>
+        <p *ngIf="firstName.errors?.minlength" class="error"><sup>*</sup>Name shouldn't be less than 2 words</p>
+        <p *ngIf="firstName.errors?.pattern" class="error"><sup>*</sup>Please enter valid firstname</p>
+ 
+      </div>
+      <div class="col">
+        <input type="text" placeholder="LastName" formControlName="lastName" class="form-control">
+        <p *ngIf="lastName.touched && lastName.invalid" class="error"><sup>*</sup>Please enter Last Name</p>
+        <p *ngIf="lastName.errors?.minlength" class="error"><sup>*</sup>Name shouldn't be less than 2 words</p>
+        <p *ngIf="lastName.errors?.pattern" class="error"><sup>*</sup>Please enter valid lastname</p>
+          </div>
+
+     
+    </div>
+  
+  
+      
+      <div class="row" style="margin-top: 10px;">
+       
+          <div class="col">
+           
+            <input type="text" placeholder="City" formControlName="city" class="form-control" required>
+           
+            <p *ngIf="city.touched && city.invalid" class="error"><sup>*</sup>Please provide city</p>
+            <p *ngIf="city.errors?.minlength" class="error"><sup>*</sup>City Name shouldn't be less than 2 words</p>
+            <p *ngIf="city.errors?.pattern" class="error"><sup>*</sup>Please enter valid cityname</p>
+      
+          </div>
+  
+          <div class="col">
+          
+            <input type="text" placeholder="Mobile number" formControlName="mobileNumber" class="form-control" required>
+          
+            <p *ngIf="mobileNumber.touched && mobileNumber.invalid" class="error"><sup>*</sup>Please provide a valid 10 digit mobile number
+              number</p>
+            <p *ngIf="mobileNumber.errors?.pattern" class="error"><sup>*</sup>Use numbers only
+              number</p>
+        
+  
+        </div>
+  
+       
+      </div>
+ 
+     <div style="margin-top: 10px; text-align: center;">
+      <button type="button" class="btn btn-secondary gap-right" (click)="ResetForm()">Reset</button>
+      <button type="submit" class="btn btn-success" [disabled]="!userForm.valid">Add Student</button>
+ 
+     </div>
+    
+  </form>
+
+
+  <div class="table-responsive" *ngIf="hideWhenNoStudent">
+    <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg">
+      <thead>
+        <tr>
+          <th scope="col">Student Id</th>
+          <th scope="col">Student name</th>
+          <th scope="col">City</th>
+          <th scope="col">Mobile number</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+ 
+        <tr *ngFor="let user of lstUser|paginate: { itemsPerPage: 5, currentPage: p }; let i = index;">
+         
+          <td>{{user.firstName}}</td>
+          <td> {{user.lastName}}</td>
+          <td>{{user.city}}</td>
+          <td>{{user.mobileNumber}}</td>
+         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <pagination-controls (pageChange)="p = $event" autoHide="true" responsive="true"></pagination-controls>
