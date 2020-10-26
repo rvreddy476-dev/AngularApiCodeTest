@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../shared/User';
+import { orderBy } from 'lodash';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -59,6 +60,7 @@ p: number = 1;
     this.lstUser.push(this.userForm.value);
   this.hideWhenNoStudent=true;
     this.ResetForm(); 
+  this.lstUser=  orderBy(this.lstUser,'lastName','asc');
    };
 
 }
